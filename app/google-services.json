@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_id": "bucks-buddy",
+    "project_number": "40251775148",
+    "name": "Bucks Buddy"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:40251775148:android:016c7f040f880321",
+        "client_id": "android:in.bucksbuddy.bucksbuddy",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "in.bucksbuddy.bucksbuddy",
+          "certificate_hash": []
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "40251775148-im9boc2utbrbe3d9kt1685fcsubcao03.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "in.bucksbuddy.bucksbuddy",
+            "certificate_hash": "67422B6562927F46835CA3029FA7D9FF1C18D125"
+          }
+        },
+        {
+          "client_id": "40251775148-si8v6v29vnh6hcmsh1ek9clo42ut0i5r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 2,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 2
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}

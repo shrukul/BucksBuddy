@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipe_refresh_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/account_wallet_amount"
+            android:layout_width="500.0dip"
+            android:layout_height="150.0dip"
+            android:layout_marginBottom="15.0dip"
+            android:layout_marginLeft="40.0dip"
+            android:layout_marginRight="40.0dip"
+            android:layout_marginTop="40.0dip"
+            android:background="@drawable/green_roundrect"
+            android:gravity="center"
+            android:text=" 0"
+            android:textColor="#ffffff"
+            android:textSize="50.0dip" />
+
+        <TextView
+            android:id="@+id/header_recents"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/account_wallet_amount"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10.0dip"
+            android:gravity="center_horizontal"
+            android:paddingBottom="5.0dip"
+            android:paddingTop="15.0dip"
+            android:text="RECENTS"
+            android:textColor="#ff4c4c4c"
+            android:textSize="12.0dip" />
+
+        <View
+            android:id="@+id/dash"
+            android:layout_width="8.0dip"
+            android:layout_height="2.0dip"
+            android:layout_below="@id/header_recents"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="25.0dip"
+            android:background="#ffe3714d" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/dash"
+            android:gravity="center">
+
+        <in.bucksbuddy.bucksbuddy.MaterialProgressBar
+            android:id="@+id/loading_spinner"
+            android:layout_width="40.0dip"
+            android:layout_height="40.0dip"
+            android:layout_centerInParent="true"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+    </RelativeLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

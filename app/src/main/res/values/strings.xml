@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">bucksbuddy</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="report_problem">Report Problem</string>
+    <string name="feedback">Feedback</string>
+    <string name="rate">Rate us</string>
+    <string name="navigation_item_1">Home</string>
+    <string name="navigation_item_2">Events</string>
+    <string name="starred_string">Starred</string>
+    <string name="credit_string">Credit Money</string>
+    <string name="home_string">Home</string>
+    <string name="bill_share">Bill Share</string>
+    <string name="bill_pay">Pay Bill</string>
+    <string name="maps">Google Map</string>
+    <string name="subheader">Subheader</string>
+    <string name="about_string">About</string>
+    <string name="signout">Sign out</string>
+    <string name="spam_string">Spams</string>
+    <string name="closeDrawer">Navigation View</string>
+    <string name="openDrawer">Navigation View Closed</string>
+
+        <string name="about_info">"Now recharge using your mobile from anywhere! FreeCharge is the most convenient way to recharge your prepaid mobile, DTH and internet data card. Now don't go looking for recharge shops. Just use the app and recharge using your debit/credit card &amp; net banking. We also make sure your money is safe with FreeCharge Balance and enable you with the fastest recharge experience, ever.
+
+Now that you've our app, relax and enjoy this experience. More to come soon …"</string>
+</resources>
