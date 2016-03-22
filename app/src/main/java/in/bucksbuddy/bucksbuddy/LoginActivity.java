@@ -287,6 +287,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         session.createUserLoginSession(name,
                 email, phone, uri);
 
+        RegGCM();
+
         Intent i = new Intent(getApplicationContext(), MainActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
@@ -295,6 +297,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         startActivity(i);
 
         finish();
+    }
+
+    private void RegGCM() {
+
+        // Start IntentService to register this application with GCM.
+        Intent intent2 = new Intent(this, RegistrationIntentService.class);
+        startService(intent2);
     }
 
     public void onLoginFailed() {

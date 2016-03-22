@@ -1,13 +1,24 @@
 package in.bucksbuddy.bucksbuddy;
 
 import android.app.IntentService;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 
+import com.appspot.bucks_buddy.bucksbuddy.Bucksbuddy;
+import com.appspot.bucks_buddy.bucksbuddy.model.ModelsBooleanMessage;
+import com.appspot.bucks_buddy.bucksbuddy.model.ModelsCreditForm;
+import com.appspot.bucks_buddy.bucksbuddy.model.ModelsGCMForm;
+import com.appspot.bucks_buddy.bucksbuddy.model.ModelsTransactionForm;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.json.gson.GsonFactory;
 
 import java.io.IOException;
 
@@ -54,5 +65,49 @@ public class RegistrationIntentService extends IntentService {
     private void sendRegistrationToServer(String token) {
         // Add custom implementation, as needed.
         preferences.edit().putString("token",token).commit();
+        UserSessionManager session = new UserSessionManager(getApplicationContext());
+        ModelsGCMForm mgf = new ModelsGCMForm();
+        mgf.setRegid(token);
+        mgf.setSender(session.getProfileInfo().phone);
+
+        BucksBuddyTask obj = new BucksBuddyTask();
+        obj.execute(mgf);
+    }
+}
+
+class BucksBuddyTask extends AsyncTask<ModelsGCMForm, Void, ModelsBooleanMessage> {
+    Context context;
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+    }
+
+    @Override
+    protected ModelsBooleanMessage doInBackground(ModelsGCMForm... mcf) {
+
+        Bucksbuddy.Builder builder = new Bucksbuddy.Builder(
+                AndroidHttp.newCompatibleTransport(), new GsonFactory(), null);
+        Bucksbuddy service = builder.build();
+
+        ModelsBooleanMessage res = null;
+
+        try {
+            res = service.registerGCM(mcf[0]).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.d("gae", "Some error");
+        }
+        return res;
+    }
+
+    @Override
+    protected void onPostExecute(ModelsBooleanMessage res) {
+        // Do something with the result.
+        Boolean result = res.getData();
+        String output = "";
+
+        if(result == true){
+        }
     }
 }
