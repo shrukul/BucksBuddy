@@ -1,5 +1,8 @@
 package in.bucksbuddy.bucksbuddy;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -9,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,6 +20,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.appspot.bucks_buddy.bucksbuddy.Bucksbuddy;
+import com.appspot.bucks_buddy.bucksbuddy.model.ModelsCreditForm;
+import com.appspot.bucks_buddy.bucksbuddy.model.ModelsGetBalanceForm;
+import com.appspot.bucks_buddy.bucksbuddy.model.ModelsStringMessage;
+import com.appspot.bucks_buddy.bucksbuddy.model.ModelsTransactionForm;
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.json.gson.GsonFactory;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -42,7 +54,7 @@ import java.util.List;
 /**
  * Created by Admin on 04-06-2015.
  */
-public class ContentFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
+public class ContentFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private final String serverUrl = "http://bucksbuddy.pe.hu/index.php";
 
@@ -57,7 +69,7 @@ public class ContentFragment extends Fragment implements SwipeRefreshLayout.OnRe
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.content_fragment,container,false);
+        View v = inflater.inflate(R.layout.content_fragment, container, false);
         return v;
     }
 
@@ -76,9 +88,9 @@ public class ContentFragment extends Fragment implements SwipeRefreshLayout.OnRe
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        amt = (TextView)getView().findViewById(R.id.account_wallet_amount);
-        swipeRefreshLayout = (SwipeRefreshLayout)getView().findViewById(R.id.swipe_refresh_layout);
-        spinner = (MaterialProgressBar)getView().findViewById(R.id.loading_spinner);
+        amt = (TextView) getView().findViewById(R.id.account_wallet_amount);
+        swipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipe_refresh_layout);
+        spinner = (MaterialProgressBar) getView().findViewById(R.id.loading_spinner);
     }
 
     @Override
@@ -87,7 +99,7 @@ public class ContentFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
         spinner.setVisibility(View.VISIBLE);
         llm = new LinearLayoutManager(getActivity());
-        rv=(RecyclerView)getView().findViewById(R.id.rv);
+        rv = (RecyclerView) getView().findViewById(R.id.rv);
         rv.setLayoutManager(llm);
         rv.setHasFixedSize(true);
         session = new UserSessionManager(getActivity().getApplicationContext());
@@ -97,37 +109,22 @@ public class ContentFragment extends Fragment implements SwipeRefreshLayout.OnRe
         swipeRefreshLayout.setColorSchemeColors(
                 Color.GREEN, Color.RED, Color.BLUE, Color.YELLOW);
 
-//        initializeData();
-//        initializeAdapter();
-
         UserSessionManager sessionManager = new UserSessionManager(getActivity().getApplicationContext());
         initRecyclerView obj = new initRecyclerView();
-        if(sessionManager.isUserLoggedIn())
+        if (sessionManager.isUserLoggedIn())
             obj.execute();
-    }
-
-    private void initializeData() throws ParseException {
-        DatabaseHandler db = new DatabaseHandler(getActivity());
-//        persons = new ArrayList<>();
-        persons = db.getAllContacts();
-        db.close();
-//        persons.add(new Person("Emma Wilson", "23 years old", R.drawable.profile));
-//        persons.add(new Person("Lavery Maiss", "25 years old", R.drawable.profile));
-//        persons.add(new Person("Lillie Watts", "35 years old", R.drawable.profile));
-    }
-
-    private void initializeAdapter(){
-        RVAdapter adapter = new RVAdapter(persons);
-        rv.setAdapter(adapter);
     }
 
     @Override
     public void onRefresh() {
-        AsyncFetchBal asyncRequestObject = new AsyncFetchBal();
-        asyncRequestObject.execute(serverUrl, "getBalnce", session.getProfileInfo().phone);;
+
+        ModelsGetBalanceForm mgbf = new ModelsGetBalanceForm();
+        mgbf.setPhoneNumber(session.getProfileInfo().phone);
+        BucksBuddyTask obj = new BucksBuddyTask();
+        obj.execute(mgbf);
     }
 
-    private class initRecyclerView extends AsyncTask<String, Void, String>{
+    private class initRecyclerView extends AsyncTask<String, Void, String> {
 
         RVAdapter adapter;
 
@@ -159,7 +156,10 @@ public class ContentFragment extends Fragment implements SwipeRefreshLayout.OnRe
         }
     }
 
-    private class AsyncFetchBal extends AsyncTask<String, Void, String> {
+    private class BucksBuddyTask extends AsyncTask<ModelsGetBalanceForm, Void, ModelsStringMessage> {
+        Context context;
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity(),
+                R.style.AppTheme_Dark_Dialog);
 
         @Override
         protected void onPreExecute() {
@@ -170,121 +170,48 @@ public class ContentFragment extends Fragment implements SwipeRefreshLayout.OnRe
         }
 
         @Override
-        protected String doInBackground(String... params) {
-            HttpParams httpParameters = new BasicHttpParams();
-            HttpConnectionParams.setConnectionTimeout(httpParameters, 5000);
-            HttpConnectionParams.setSoTimeout(httpParameters, 5000);
-            HttpClient httpClient = new DefaultHttpClient(httpParameters);
-            HttpPost httpPost = new HttpPost(params[0]);
+        protected ModelsStringMessage doInBackground(ModelsGetBalanceForm... mgbf) {
 
-            String jsonResult = "";
+            Bucksbuddy.Builder builder = new Bucksbuddy.Builder(
+                    AndroidHttp.newCompatibleTransport(), new GsonFactory(), null);
+            Bucksbuddy service = builder.build();
+
+            ModelsStringMessage bal = null;
 
             try {
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-
-                nameValuePairs.add(new BasicNameValuePair("action", params[1]));
-                nameValuePairs.add(new BasicNameValuePair("id", params[2]));
-
-                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                HttpResponse response = httpClient.execute(httpPost);
-
-                jsonResult = inputStreamToString(response.getEntity().getContent()).toString();
-
-                System.out.println("Returned Json object " + jsonResult.toString());
-
-            } catch (ClientProtocolException e) {
-                e.printStackTrace();
+                bal = service.getBalance(mgbf[0]).execute();
             } catch (IOException e) {
                 e.printStackTrace();
+                Log.d("gae", "Some error");
             }
-
-            return jsonResult;
-
+            return bal;
         }
 
         @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
+        protected void onPostExecute(ModelsStringMessage res) {
 
             // stopping swipe refresh
             swipeRefreshLayout.setRefreshing(false);
 
-            System.out.println("Resulted Value: " + result);
-
-            if (result.equals("") || result == null) {
-                Snackbar snackbar = Snackbar.make(getView(), "Server Connection Failed", Snackbar.LENGTH_LONG);
+            // Do something with the result.
+            if (res != null) {
+                session.setBalance(res.getData().toString());
+                amt.setText("₹ " + session.getBalance());
+                Snackbar snackbar = Snackbar.make(getView(), "Balance Updated.", Snackbar.LENGTH_LONG);
                 snackbar.show();
-                return;
-            }
-
-            int jsonResult = returnParsedJsonObject(result);
-
-            if (jsonResult == 0) {
+            } else {
                 Snackbar snackbar = Snackbar.make(getView(), "Something Went Wrong. Please try again later...", Snackbar.LENGTH_LONG);
                 snackbar.show();
-                return;
-            } else if (jsonResult == 1) {
-                try {
-                    session.setBalance("" + ((Integer.parseInt(new JSONObject(result).getString("balance")))));
-                    amt.setText("₹ " + session.getBalance());
-                    Snackbar snackbar = Snackbar.make(getView(), "Balance Updated.", Snackbar.LENGTH_LONG);
-                    snackbar.show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
             }
-
         }
-
-        private StringBuilder inputStreamToString(InputStream is) {
-
-            String rLine = "";
-
-            StringBuilder answer = new StringBuilder();
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-
-            try {
-                while ((rLine = br.readLine()) != null) {
-                    answer.append(rLine);
-                }
-            } catch (IOException e) {
-
-// TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
-            return answer;
-
-        }
-
-    }
-
-    private int returnParsedJsonObject(String result) {
-
-        JSONObject resultObject = null;
-
-        int returnedResult = 0;
-
-        try {
-            resultObject = new JSONObject(result);
-            returnedResult = resultObject.getInt("success");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return returnedResult;
-
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.action_refresh){
+        if (item.getItemId() == R.id.action_refresh) {
             onRefresh();
             return true;
-        }
-        else
+        } else
             return super.onOptionsItemSelected(item);
     }
 }
