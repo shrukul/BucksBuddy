@@ -104,7 +104,12 @@ class BucksBuddyTask extends AsyncTask<ModelsGCMForm, Void, ModelsBooleanMessage
     @Override
     protected void onPostExecute(ModelsBooleanMessage res) {
         // Do something with the result.
-        Boolean result = res.getData();
+        Boolean result = false;
+        try {
+            result = res.getData();
+        } catch (Exception E){
+            E.printStackTrace();
+        }
         String output = "";
 
         if(result == true){
