@@ -145,7 +145,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         protected void onPreExecute() {
             super.onPreExecute();
             progressDialog.setIndeterminate(true);
-            progressDialog.setMessage("Transferring Money...");
+            progressDialog.setMessage("Logging in...");
             progressDialog.show();
         }
 
@@ -170,16 +170,20 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         @Override
         protected void onPostExecute(ModelsProfileForm profile) {
-            phone = profile.getPhoneNumber();
-            name = profile.getDisplayName();
-            uri = profile.getUri();
-            email = profile.getMainEmail();
-            UserSessionManager session = new UserSessionManager(getApplicationContext());
-            session.setBalance("" + profile.getBalance());
-            System.out.println("got id = " + phone);
             progressDialog.dismiss();
-            onLoginSuccess();
-            // Do something with the result.
+            if(profile!=null && profile.getSuccess().intValue() == 1) {
+                phone = profile.getPhoneNumber();
+                name = profile.getDisplayName();
+                uri = profile.getUri();
+                email = profile.getMainEmail();
+                UserSessionManager session = new UserSessionManager(getApplicationContext());
+                session.setBalance("" + profile.getBalance());
+                System.out.println("got id = " + phone);
+                onLoginSuccess();
+                // Do something with the result.
+            }else{
+                onLoginFailed();
+            }
         }
     }
 
@@ -234,7 +238,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         protected void onPreExecute() {
             super.onPreExecute();
             progressDialog.setIndeterminate(true);
-            progressDialog.setMessage("Transferring Money...");
+            progressDialog.setMessage("Signing In...");
             progressDialog.show();
         }
 
