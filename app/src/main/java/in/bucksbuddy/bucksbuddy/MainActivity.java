@@ -282,7 +282,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
                 sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Download bucksbuddy");
-                sharingIntent.putExtra(Intent.EXTRA_TEXT, "Click the Below Link to download Bucksbuddy app from Google Playstore \n https://drive.google.com/file/d/0B9C4GrjyCX87ZktNX0NPVUlyZ0U/view?usp=sharing");
+                sharingIntent.putExtra(Intent.EXTRA_TEXT, "Click the Below Link to download Bucksbuddy app from Google Playstore \n https://play.google.com/store/apps/details?id=in.bucksbuddy.bucksbuddy");
                 startActivity(Intent.createChooser(sharingIntent, "Share using..."));
                 return true;
             case R.id.feedback:

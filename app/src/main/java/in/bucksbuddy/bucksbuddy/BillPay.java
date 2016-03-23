@@ -134,8 +134,6 @@ public class BillPay extends Fragment {
 
         BucksBuddyTask obj = new BucksBuddyTask();
         obj.execute(mbpf);
-//        AsyncDataClass asyncRequestObject = new AsyncDataClass();
-//        asyncRequestObject.execute(serverUrl, s_id, r_id, s_pin, r_pin, amt);
     }
 
     private class BucksBuddyTask extends AsyncTask<ModelsBillPayForm, Void, ModelsTransactionForm>{
@@ -147,7 +145,7 @@ public class BillPay extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
             progressDialog.setIndeterminate(true);
-            progressDialog.setMessage("Transferring Money...");
+            progressDialog.setMessage("Sending Money...");
             progressDialog.show();
         }
 
@@ -206,152 +204,5 @@ public class BillPay extends Fragment {
             Snackbar snackbar = Snackbar.make(getView(), output, Snackbar.LENGTH_LONG);
             snackbar.show();
         }
-    }
-
-    private class AsyncDataClass extends AsyncTask<String, Void, String> {
-
-        final ProgressDialog progressDialog = new ProgressDialog(getActivity(),
-                R.style.AppTheme_Dark_Dialog);
-
-        @Override
-        protected void onPreExecute() {
-            progressDialog.setIndeterminate(true);
-            progressDialog.setMessage("Transferring Money...");
-            progressDialog.show();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-
-            HttpParams httpParameters = new BasicHttpParams();
-            HttpConnectionParams.setConnectionTimeout(httpParameters, 5000);
-            HttpConnectionParams.setSoTimeout(httpParameters, 5000);
-            HttpClient httpClient = new DefaultHttpClient(httpParameters);
-            HttpPost httpPost = new HttpPost(params[0]);
-
-            String jsonResult = "";
-
-            try {
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-
-                nameValuePairs.add(new BasicNameValuePair("sender_id", params[1]));
-                nameValuePairs.add(new BasicNameValuePair("receiver_id", params[2]));
-                nameValuePairs.add(new BasicNameValuePair("sender_pin", params[3]));
-                nameValuePairs.add(new BasicNameValuePair("receiver_pin", params[4]));
-                nameValuePairs.add(new BasicNameValuePair("amount", params[5]));
-
-                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                HttpResponse response = httpClient.execute(httpPost);
-
-                jsonResult = inputStreamToString(response.getEntity().getContent()).toString();
-
-                System.out.println("Returned Json object " + jsonResult.toString());
-
-            } catch (ClientProtocolException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            return jsonResult;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-
-            progressDialog.dismiss();
-
-            System.out.println("Resulted Value: " + result);
-
-            if(result.equals("") || result == null){
-                Snackbar snackbar = Snackbar.make(getView(), "Server Connection Failed", Snackbar.LENGTH_LONG);
-                snackbar.show();
-                return;
-            }
-
-            int jsonResult = returnParsedJsonObject(result);
-
-            if(jsonResult == 0){
-                Snackbar snackbar = Snackbar.make(getView(), "Inavalid ID or pin", Snackbar.LENGTH_LONG);
-                snackbar.show();
-                return;
-            } else if(jsonResult == 1){
-
-                Snackbar snackbar = Snackbar.make(getView(), "Transaction Successful", Snackbar.LENGTH_LONG);
-                snackbar.show();
-
-                DatabaseHandler db = new DatabaseHandler(getActivity());
-                Calendar c = Calendar.getInstance();
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-                String formattedDate = df.format(c.getTime());
-
-                try {
-                    db.addContact(new Person(new JSONObject(result).getString("name"), formattedDate, R.drawable.profile, amount.getText().toString(),0));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                db.close();
-
-                UserSessionManager session = new UserSessionManager(getActivity().getApplicationContext());
-                session.setBalance("" + ((Integer.parseInt(session.getBalance())) - Integer.parseInt(amount.getText().toString())));
-
-
-            }
-
-        }
-
-        private StringBuilder inputStreamToString(InputStream is) {
-
-            String rLine = "";
-
-            StringBuilder answer = new StringBuilder();
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-
-            try {
-
-                while ((rLine = br.readLine()) != null) {
-
-                    answer.append(rLine);
-
-                }
-
-            } catch (IOException e) {
-
-// TODO Auto-generated catch block
-
-                e.printStackTrace();
-
-            }
-
-            return answer;
-
-        }
-
-    }
-
-    private int returnParsedJsonObject(String result){
-
-        JSONObject resultObject = null;
-
-        int returnedResult = 0;
-
-        try {
-
-            resultObject = new JSONObject(result);
-
-            returnedResult = resultObject.getInt("success");
-
-        } catch (JSONException e) {
-
-            e.printStackTrace();
-
-        }
-
-        return returnedResult;
-
     }
 }

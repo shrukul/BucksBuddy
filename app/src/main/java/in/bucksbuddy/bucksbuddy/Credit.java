@@ -86,8 +86,6 @@ public class Credit extends Fragment {
 
     private void credit() {
 
-        //transfer.setEnabled(false);
-
         String amt = input_credit.getText().toString();
 
         // TODO: Implement your own signup logic here.
@@ -101,9 +99,6 @@ public class Credit extends Fragment {
 
         BucksBuddyTask obj = new BucksBuddyTask();
         obj.execute(mcf);
-
-//        AsyncDataClass asyncRequestObject = new AsyncDataClass();
-//        asyncRequestObject.execute(serverUrl, s_id, amt);
     }
 
     private class BucksBuddyTask extends AsyncTask<ModelsCreditForm, Void, ModelsTransactionForm>{
@@ -115,7 +110,7 @@ public class Credit extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
             progressDialog.setIndeterminate(true);
-            progressDialog.setMessage("Transferring Money...");
+            progressDialog.setMessage("Crediting...");
             progressDialog.show();
         }
 
@@ -166,127 +161,5 @@ public class Credit extends Fragment {
             Snackbar snackbar = Snackbar.make(getView(), output, Snackbar.LENGTH_LONG);
             snackbar.show();
         }
-    }
-
-    private class AsyncDataClass extends AsyncTask<String, Void, String> {
-
-        final ProgressDialog progressDialog = new ProgressDialog(getActivity(),
-                R.style.AppTheme_Dark_Dialog);
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog.setIndeterminate(true);
-            progressDialog.setMessage("Crediting Money...");
-            progressDialog.show();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            HttpParams httpParameters = new BasicHttpParams();
-            HttpConnectionParams.setConnectionTimeout(httpParameters, 5000);
-            HttpConnectionParams.setSoTimeout(httpParameters, 5000);
-            HttpClient httpClient = new DefaultHttpClient(httpParameters);
-            HttpPost httpPost = new HttpPost(params[0]);
-
-            String jsonResult = "";
-
-            try {
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-
-                nameValuePairs.add(new BasicNameValuePair("sender_id", params[1]));
-                nameValuePairs.add(new BasicNameValuePair("amount", params[2]));
-
-                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                HttpResponse response = httpClient.execute(httpPost);
-
-                jsonResult = inputStreamToString(response.getEntity().getContent()).toString();
-
-                System.out.println("Returned Json object " + jsonResult.toString());
-
-            } catch (ClientProtocolException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            return jsonResult;
-
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-
-            progressDialog.dismiss();
-
-            System.out.println("Resulted Value: " + result);
-
-            if (result.equals("") || result == null) {
-                Snackbar snackbar = Snackbar.make(getView(), "Server Connection Failed", Snackbar.LENGTH_LONG);
-                snackbar.show();
-                return;
-            }
-
-            int jsonResult = returnParsedJsonObject(result);
-
-            if (jsonResult == 0) {
-                Snackbar snackbar = Snackbar.make(getView(), "Transaction Failed", Snackbar.LENGTH_LONG);
-                snackbar.show();
-                return;
-            } else if (jsonResult == 1) {
-                Snackbar snackbar = Snackbar.make(getView(), "Transaction Successful. Your account will be credited in a minute...", Snackbar.LENGTH_LONG);
-                snackbar.show();
-
-                Intent it = new Intent(getActivity(),TransferSuccess.class);
-                it.putExtra("msg", "Successfully credited ₹ " + input_credit.getText() + " to your wallet");
-                startActivity(it);
-                input_credit.setText("");
-//                UserSessionManager session = new UserSessionManager(getActivity().getApplicationContext());
-//                session.setBalance("" + ((Integer.parseInt(session.getBalance())) + Integer.parseInt(input_credit.getText().toString())));
-            }
-
-        }
-
-        private StringBuilder inputStreamToString(InputStream is) {
-
-            String rLine = "";
-
-            StringBuilder answer = new StringBuilder();
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-
-            try {
-                while ((rLine = br.readLine()) != null) {
-                    answer.append(rLine);
-                }
-            } catch (IOException e) {
-
-// TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
-            return answer;
-
-        }
-
-    }
-
-    private int returnParsedJsonObject(String result) {
-
-        JSONObject resultObject = null;
-
-        int returnedResult = 0;
-
-        try {
-            resultObject = new JSONObject(result);
-            returnedResult = resultObject.getInt("success");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return returnedResult;
-
     }
 }

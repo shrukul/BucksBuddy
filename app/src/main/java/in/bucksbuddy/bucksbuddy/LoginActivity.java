@@ -17,11 +17,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.appspot.bucks_buddy.bucksbuddy.Bucksbuddy;
-import com.appspot.bucks_buddy.bucksbuddy.model.ModelsBillShareForm;
 import com.appspot.bucks_buddy.bucksbuddy.model.ModelsGoogleLoginForm;
 import com.appspot.bucks_buddy.bucksbuddy.model.ModelsLoginForm;
 import com.appspot.bucks_buddy.bucksbuddy.model.ModelsProfileForm;
-import com.appspot.bucks_buddy.bucksbuddy.model.ModelsTransactionForm;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
@@ -32,8 +30,6 @@ import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.json.gson.GsonFactory;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
@@ -117,7 +113,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         Log.d(TAG, "Login");
 
         if (!validate()) {
-            onLoginFailed();
+            onLoginFailed(-1);
             return;
         }
 
@@ -182,7 +178,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 onLoginSuccess();
                 // Do something with the result.
             }else{
-                onLoginFailed();
+                onLoginFailed(profile.getSuccess().intValue());
             }
         }
     }
@@ -274,7 +270,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 session.setBalance("" + profile.getBalance());
                 System.out.println("got id = " + phone);
             } else {
-                onLoginFailed();
+                onLoginFailed(profile.getSuccess().intValue());
             }
         }
     }
@@ -310,9 +306,16 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         startService(intent2);
     }
 
-    public void onLoginFailed() {
-        Snackbar snackbar = Snackbar.make(parentLayout, "Login Failed", Snackbar.LENGTH_LONG);
-        snackbar.show();
+    public void onLoginFailed(int resCode) {
+        String text = "Something went Wrong. Try again...";
+        if(resCode == 0)
+            text = "The User does not exist. Check the phone number again...";
+        else if (resCode == 2)
+            text = "Invalid Phone Number / Pin";
+        if(resCode != -1) {// Validation failed
+            Snackbar snackbar = Snackbar.make(parentLayout, text, Snackbar.LENGTH_LONG);
+            snackbar.show();
+        }
 
         loginButton.setEnabled(true);
     }
