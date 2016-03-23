@@ -179,7 +179,7 @@ public class SignupActivity extends AppCompatActivity implements GoogleApiClient
         protected void onPreExecute() {
             super.onPreExecute();
             progressDialog.setIndeterminate(true);
-            progressDialog.setMessage("Transferring Money...");
+            progressDialog.setMessage("Signing Up...");
             progressDialog.show();
         }
 
