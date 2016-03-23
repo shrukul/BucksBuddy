@@ -30,58 +30,58 @@ class Person {
         this.amount = amount;
     }
 
-    Person(){
+    Person() {
 
     }
 
 
     // getting ID
-    public String getPhone(){
+    public String getPhone() {
         return this.phone;
     }
 
     // setting id
-    public void setPhone(String age){
+    public void setPhone(String age) {
         this.phone = age;
     }
 
     // getting name
-    public String getName(){
+    public String getName() {
         return this.name;
     }
 
     // setting name
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
 
     // getting phone number
-    public int getPhotoId(){
+    public int getPhotoId() {
         return this.photoId;
     }
 
     // setting phone number
-    public void setPhotoId(int photoId){
+    public void setPhotoId(int photoId) {
         this.photoId = photoId;
     }
 
     // getting phone number
-    public String getAmount(){
+    public String getAmount() {
         return this.amount;
     }
 
     // setting phone number
-    public void setAmount(String amount){
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 
     // getting phone number
-    public int getType(){
+    public int getType() {
         return this.type;
     }
 
     // setting phone number
-    public void setType(int type){
-        this.type= type;
+    public void setType(int type) {
+        this.type = type;
     }
 }

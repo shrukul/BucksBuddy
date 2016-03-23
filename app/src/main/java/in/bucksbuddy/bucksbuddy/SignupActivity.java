@@ -61,8 +61,8 @@ import java.util.Random;
 public class SignupActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     private static final String TAG = "SignupActivity";
     private final String serverUrl = "http://bucksbuddy.pe.hu/index.php";
-    String PROJECT_NUMBER="744421378343";
-    private String sname, semail, suri,sphone;
+    String PROJECT_NUMBER = "744421378343";
+    private String sname, semail, suri, sphone;
 
     UserSessionManager session;
     View parentLayout;
@@ -170,7 +170,7 @@ public class SignupActivity extends AppCompatActivity implements GoogleApiClient
         obj.execute(muf);
     }
 
-    private class BucksBuddyTask extends AsyncTask<ModelsUserForm, Void, ModelsProfileForm>{
+    private class BucksBuddyTask extends AsyncTask<ModelsUserForm, Void, ModelsProfileForm> {
         Context context;
         final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this,
                 R.style.AppTheme_Dark_Dialog);
@@ -203,13 +203,13 @@ public class SignupActivity extends AppCompatActivity implements GoogleApiClient
         protected void onPostExecute(ModelsProfileForm prof) {
             progressDialog.dismiss();
             // Do something with the result.
-            if(prof!=null && prof.getSuccess().intValue() == 1){
+            if (prof != null && prof.getSuccess().intValue() == 1) {
                 sname = prof.getDisplayName();
                 semail = prof.getMainEmail();
                 suri = prof.getUri();
                 sphone = prof.getPhoneNumber();
                 onSignupSuccess();
-            } else if (prof.getSuccess().intValue() == 0){
+            } else if (prof.getSuccess().intValue() == 0) {
                 onSignupFailed("An account with the same Phone Number already exists. Try Logging in instead.");
             } else {
                 onSignupFailed("Oops. Something went wrong... Try again!");
@@ -258,7 +258,7 @@ public class SignupActivity extends AppCompatActivity implements GoogleApiClient
     }
 
     public void onSignupFailed(String text) {
-        Snackbar snackbar = Snackbar.make( parentLayout, text, Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(parentLayout, text, Snackbar.LENGTH_LONG);
         snackbar.show();
         signupButton.setEnabled(true);
     }
@@ -355,7 +355,7 @@ public class SignupActivity extends AppCompatActivity implements GoogleApiClient
             System.out.println("Resulted Value: " + result);
 
             if (result.equals("") || result == null) {
-                Snackbar snackbar = Snackbar.make( parentLayout, "Server Connection Failed", Snackbar.LENGTH_LONG);
+                Snackbar snackbar = Snackbar.make(parentLayout, "Server Connection Failed", Snackbar.LENGTH_LONG);
                 snackbar.show();
                 signedUp = 0;
                 onSignupFailed("");
@@ -365,12 +365,12 @@ public class SignupActivity extends AppCompatActivity implements GoogleApiClient
             int jsonResult = returnParsedJsonObject(result);
 
             if (jsonResult == 0) {
-                Snackbar snackbar = Snackbar.make( parentLayout, "The Email already exists. Login Intead.", Snackbar.LENGTH_LONG);
+                Snackbar snackbar = Snackbar.make(parentLayout, "The Email already exists. Login Intead.", Snackbar.LENGTH_LONG);
                 snackbar.show();
                 signedUp = 1;
                 onSignupFailed("");
                 return;
-            }else if (jsonResult == 1) {
+            } else if (jsonResult == 1) {
                 signedUp = 2;
                 onSignupSuccess();
             }
@@ -427,10 +427,10 @@ public class SignupActivity extends AppCompatActivity implements GoogleApiClient
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             //Calling a new function to handle signin
             handleSignInResult(result);
-        } else if(requestCode == 1 && resultCode == Activity.RESULT_OK){
-            SharedPreferences preferences = getSharedPreferences("bucksbuddyPref",0);
+        } else if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            SharedPreferences preferences = getSharedPreferences("bucksbuddyPref", 0);
             sphone = data.getStringExtra("phone");
-            signup(sname,semail,sphone,suri);
+            signup(sname, semail, sphone, suri);
         }
     }
 
@@ -443,11 +443,10 @@ public class SignupActivity extends AppCompatActivity implements GoogleApiClient
 
             String name = result.getSignInAccount().getDisplayName();
             String email = result.getSignInAccount().getEmail();
-            String uri="null";
+            String uri = "null";
             try {
                 uri = result.getSignInAccount().getPhotoUrl().toString();
-            }
-            catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 e.printStackTrace();
             }
             sname = name;
@@ -456,7 +455,7 @@ public class SignupActivity extends AppCompatActivity implements GoogleApiClient
 
             getAddInfo();
 //            RegGCM();
-        }else {
+        } else {
             System.out.println("GoogleSignUpFailed");
             System.out.println(result.getStatus());
         }

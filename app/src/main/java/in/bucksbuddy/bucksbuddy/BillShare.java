@@ -63,23 +63,23 @@ public class BillShare extends Fragment {
     private static final String TAG = "BillShareActivity";
     private final String serverUrl = "http://bucksbuddy.pe.hu/index.php";
 
-    EditText sender_id,receiver_id,sender_pin,amount;
+    EditText sender_id, receiver_id, sender_pin, amount;
     Button transfer;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.bill_share,container,false);
+        View v = inflater.inflate(R.layout.bill_share, container, false);
         return v;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        sender_id = (EditText)getView().findViewById(R.id.sender_id);
-        receiver_id = (EditText)getView().findViewById(R.id.receiver_id);
-        sender_pin = (EditText)getView().findViewById(R.id.sender_pin);
-        amount = (EditText)getView().findViewById(R.id.amount);
-        transfer = (Button)getView().findViewById(R.id.transfer);
+        sender_id = (EditText) getView().findViewById(R.id.sender_id);
+        receiver_id = (EditText) getView().findViewById(R.id.receiver_id);
+        sender_pin = (EditText) getView().findViewById(R.id.sender_pin);
+        amount = (EditText) getView().findViewById(R.id.amount);
+        transfer = (Button) getView().findViewById(R.id.transfer);
     }
 
     @Override
@@ -92,7 +92,7 @@ public class BillShare extends Fragment {
         transfer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                InputMethodManager inputManager = (InputMethodManager)getActivity().getSystemService(getActivity().getApplicationContext().INPUT_METHOD_SERVICE);
+                InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(getActivity().getApplicationContext().INPUT_METHOD_SERVICE);
                 inputManager.hideSoftInputFromWindow((null == getActivity().getCurrentFocus()) ? null : getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
                 transfer();
@@ -109,11 +109,11 @@ public class BillShare extends Fragment {
 
         UserSessionManager session = new UserSessionManager(getActivity().getApplicationContext());
         int balance = Integer.parseInt(session.getBalance());
-        if(Integer.parseInt(amt) > balance){
+        if (Integer.parseInt(amt) > balance) {
             Snackbar snackbar = Snackbar.make(getView(), "Amount Exceeds Balance", Snackbar.LENGTH_LONG);
             snackbar.show();
             return;
-        } else if(Integer.parseInt(amt) > 2000){
+        } else if (Integer.parseInt(amt) > 2000) {
             Snackbar snackbar = Snackbar.make(getView(), "Transaction Limit is 2000, for now...", Snackbar.LENGTH_LONG);
             snackbar.show();
             return;
@@ -126,16 +126,16 @@ public class BillShare extends Fragment {
         // TODO: Implement your own signup logic here.
 
         ModelsBillShareForm mbsf = new ModelsBillShareForm();
-        mbsf.setAmount((long)Integer.parseInt(amt));
+        mbsf.setAmount((long) Integer.parseInt(amt));
         mbsf.setSender(s_id);
         mbsf.setReceiver(r_id);
-        mbsf.setSenderPin((long)Integer.parseInt(s_pin));
+        mbsf.setSenderPin((long) Integer.parseInt(s_pin));
 
         BucksBuddyTask obj = new BucksBuddyTask();
         obj.execute(mbsf);
     }
 
-    private class BucksBuddyTask extends AsyncTask<ModelsBillShareForm, Void, ModelsTransactionForm>{
+    private class BucksBuddyTask extends AsyncTask<ModelsBillShareForm, Void, ModelsTransactionForm> {
         Context context;
         final ProgressDialog progressDialog = new ProgressDialog(getActivity(),
                 R.style.AppTheme_Dark_Dialog);
@@ -161,7 +161,7 @@ public class BillShare extends Fragment {
                 trans = service.billShare(mbsf[0]).execute();
             } catch (IOException e) {
                 e.printStackTrace();
-                Log.d("gae","Some error");
+                Log.d("gae", "Some error");
             }
             return trans;
         }
@@ -173,14 +173,14 @@ public class BillShare extends Fragment {
             int result = trans.getSuccess().intValue();
             String output = "";
 
-            switch (result){
+            switch (result) {
                 case 1:
                     DatabaseHandler db = new DatabaseHandler(getActivity());
                     Calendar c = Calendar.getInstance();
                     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                     String formattedDate = df.format(c.getTime());
 
-                    db.addContact(new Person(trans.getDisplayName(), formattedDate, R.drawable.profile, ""+trans.getAmount().intValue(), 0));
+                    db.addContact(new Person(trans.getDisplayName(), formattedDate, R.drawable.profile, "" + trans.getAmount().intValue(), 0));
 
                     db.close();
                     UserSessionManager session = new UserSessionManager(getActivity().getApplicationContext());

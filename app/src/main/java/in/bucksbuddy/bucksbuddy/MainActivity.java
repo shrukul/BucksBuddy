@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
     ShareActionProvider mShareActionProvider;
 
     UserSessionManager session;
-    Boolean failedImage=false;
+    Boolean failedImage = false;
     private static final int RESULT_SETTINGS = 1;
 
     @Override
@@ -209,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
 
         System.out.println("url is " + personPhoto.toString());
 
-        if(!personPhoto.toString().contentEquals("null")) {
+        if (!personPhoto.toString().contentEquals("null")) {
             new LoadProfileImage(profile).execute(personPhoto);
         }
 
@@ -240,7 +240,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(Bitmap result) {
-            if(failedImage==false) {
+            if (failedImage == false) {
                 navigationView.getHeaderView(0).setBackground(new BitmapDrawable(getResources(), blur(result)));
                 bmImage.setImageBitmap(result);
             }
@@ -288,7 +288,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.feedback:
                 Intent it = new Intent(Intent.ACTION_SENDTO);
                 it.setType("message/rfc822");
-                it.putExtra(Intent.EXTRA_EMAIL  , new String[]{"bucksbuddycare@gmail.com"});
+                it.putExtra(Intent.EXTRA_EMAIL, new String[]{"bucksbuddycare@gmail.com"});
                 it.putExtra(Intent.EXTRA_SUBJECT, "Android BucksBuddy Feedback/Bug Report");
                 it.setData(Uri.parse("mailto:"));
                 try {
@@ -325,7 +325,7 @@ public class MainActivity extends AppCompatActivity {
     public Bitmap blur(Bitmap image) {
         if (null == image) return null;
 
-        Bitmap outputBitmap = Bitmap.createBitmap(image.getWidth(),image.getHeight(),Bitmap.Config.ARGB_8888);
+        Bitmap outputBitmap = Bitmap.createBitmap(image.getWidth(), image.getHeight(), Bitmap.Config.ARGB_8888);
         final RenderScript renderScript = RenderScript.create(this);
         Allocation tmpIn = Allocation.createFromBitmap(renderScript, image);
         Allocation tmpOut = Allocation.createFromBitmap(renderScript, outputBitmap);
@@ -343,8 +343,8 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(Gravity.LEFT)) {
             drawerLayout.closeDrawer(Gravity.LEFT);
-        } else if (getSupportFragmentManager().getBackStackEntryCount() > 0 ){
-            while(getSupportFragmentManager().getBackStackEntryCount() > 0)
+        } else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            while (getSupportFragmentManager().getBackStackEntryCount() > 0)
                 getSupportFragmentManager().popBackStackImmediate();
         } else {
             super.onBackPressed();

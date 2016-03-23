@@ -8,9 +8,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
         android:background="@drawable/login_bg"
+        android:gravity="center"
+        android:orientation="vertical"
         android:paddingLeft="24dp"
         android:paddingRight="24dp"
         android:paddingTop="56dp">
@@ -20,27 +20,27 @@
             android:layout_height="72dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="24dp"
-            android:src="@drawable/my_logo"
             android:focusable="true"
-            android:focusableInTouchMode="true"/>
+            android:focusableInTouchMode="true"
+            android:src="@drawable/my_logo" />
 
         <EditText
             android:id="@+id/p_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Phone Number"
-            android:inputType="phone"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30.0dip"
             android:background="#33000000"
             android:drawableLeft="@drawable/phone_new"
+            android:drawablePadding="10dip"
+            android:hint="Phone Number"
+            android:inputType="phone"
+            android:padding="10dip"
             android:textColor="#e6ffffff"
             android:textColorHint="#4cffffff"
             android:textSize="16dip"
-            android:textStyle="normal"
-            android:padding="10dip"
-            android:drawablePadding="10dip"/>
+            android:textStyle="normal" />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_setup"

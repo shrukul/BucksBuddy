@@ -1,19 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-<!--    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp">
-        <EditText android:id="@+id/sender_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:hint="Sender ID" />
-    </android.support.design.widget.TextInputLayout>-->
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <EditText
         android:id="@+id/sender_id"
@@ -24,11 +13,15 @@
         android:layout_marginRight="22.0dip"
         android:layout_marginTop="15.0dip"
         android:background="@drawable/bg_payment_surround_box"
+        android:clickable="false"
+        android:cursorVisible="false"
         android:drawablePadding="15.0dip"
-        android:hint="Sender ID"
-        android:inputType="text"
         android:editable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:hint="Sender ID"
         android:imeOptions="actionDone"
+        android:inputType="text"
         android:paddingBottom="5.0dip"
         android:paddingLeft="15.0dip"
         android:paddingRight="5.0dip"
@@ -36,23 +29,19 @@
         android:singleLine="true"
         android:textColor="@color/add_user_number_edit_text_selector"
         android:textColorHint="#4c000000"
-        android:textSize="16.0dip"
-        android:clickable="false"
-        android:cursorVisible="false"
-        android:focusable="false"
-        android:focusableInTouchMode="false"/>
+        android:textSize="16.0dip" />
 
-<!--    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp">
-        <EditText android:id="@+id/receiver_id"
+    <!--    <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:hint="Receiver ID" />
-    </android.support.design.widget.TextInputLayout>-->
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/receiver_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="Receiver ID" />
+        </android.support.design.widget.TextInputLayout>-->
 
     <EditText
         android:id="@+id/receiver_id"
@@ -62,12 +51,12 @@
         android:layout_marginLeft="22.0dip"
         android:layout_marginRight="22.0dip"
         android:layout_marginTop="15.0dip"
-        android:drawablePadding="15.0dip"
         android:background="@drawable/bg_payment_surround_box"
-        android:hint="Receiver ID"
-        android:inputType="text"
+        android:drawablePadding="15.0dip"
         android:editable="true"
+        android:hint="Receiver ID"
         android:imeOptions="actionDone"
+        android:inputType="text"
         android:paddingBottom="5.0dip"
         android:paddingLeft="15.0dip"
         android:paddingRight="5.0dip"
@@ -75,19 +64,7 @@
         android:singleLine="true"
         android:textColor="@color/add_user_number_edit_text_selector"
         android:textColorHint="#4c000000"
-        android:textSize="16.0dip"/>
-
-<!--    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp">
-        <EditText android:id="@+id/sender_pin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="numberPassword"
-            android:hint="Sender PIN" />
-    </android.support.design.widget.TextInputLayout>-->
+        android:textSize="16.0dip" />
 
     <EditText
         android:id="@+id/sender_pin"
@@ -100,8 +77,8 @@
         android:background="@drawable/bg_payment_surround_box"
         android:drawablePadding="15.0dip"
         android:hint="Sender PIN"
-        android:inputType="numberPassword"
         android:imeOptions="actionDone"
+        android:inputType="numberPassword"
         android:paddingBottom="5.0dip"
         android:paddingLeft="15.0dip"
         android:paddingRight="5.0dip"
@@ -109,19 +86,7 @@
         android:singleLine="true"
         android:textColor="@color/add_user_number_edit_text_selector"
         android:textColorHint="#4c000000"
-        android:textSize="16.0dip"/>
-
-<!--    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp">
-        <EditText android:id="@+id/receiver_pin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="numberPassword"
-            android:hint="Receiver PIN" />
-    </android.support.design.widget.TextInputLayout>-->
+        android:textSize="16.0dip" />
 
     <EditText
         android:id="@+id/receiver_pin"
@@ -134,8 +99,8 @@
         android:background="@drawable/bg_payment_surround_box"
         android:drawablePadding="15.0dip"
         android:hint="Receiver PIN"
-        android:inputType="numberPassword"
         android:imeOptions="actionDone"
+        android:inputType="numberPassword"
         android:paddingBottom="5.0dip"
         android:paddingLeft="15.0dip"
         android:paddingRight="5.0dip"
@@ -143,19 +108,7 @@
         android:singleLine="true"
         android:textColor="@color/add_user_number_edit_text_selector"
         android:textColorHint="#4c000000"
-        android:textSize="16.0dip"/>
-
-<!--    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp">
-        <EditText android:id="@+id/amount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:hint="Amount" />
-    </android.support.design.widget.TextInputLayout>-->
+        android:textSize="16.0dip" />
 
     <EditText
         android:id="@+id/amount"
@@ -168,8 +121,8 @@
         android:background="@drawable/bg_payment_surround_box"
         android:drawablePadding="15.0dip"
         android:hint="Amount"
-        android:inputType="number"
         android:imeOptions="actionDone"
+        android:inputType="number"
         android:paddingBottom="5.0dip"
         android:paddingLeft="15.0dip"
         android:paddingRight="5.0dip"
@@ -177,15 +130,15 @@
         android:singleLine="true"
         android:textColor="@color/add_user_number_edit_text_selector"
         android:textColorHint="#4c000000"
-        android:textSize="16.0dip"/>
+        android:textSize="16.0dip" />
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/transfer"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         android:layout_marginBottom="24dp"
+        android:layout_marginTop="24dp"
         android:padding="12dp"
         android:text="Transfer"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white" />
 </LinearLayout>

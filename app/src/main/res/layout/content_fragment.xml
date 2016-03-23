@@ -54,16 +54,16 @@
             android:layout_below="@id/dash"
             android:gravity="center">
 
-        <in.bucksbuddy.bucksbuddy.MaterialProgressBar
-            android:id="@+id/loading_spinner"
-            android:layout_width="40.0dip"
-            android:layout_height="40.0dip"
-            android:layout_centerInParent="true"/>
+            <in.bucksbuddy.bucksbuddy.MaterialProgressBar
+                android:id="@+id/loading_spinner"
+                android:layout_width="40.0dip"
+                android:layout_height="40.0dip"
+                android:layout_centerInParent="true" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
         </RelativeLayout>
     </RelativeLayout>

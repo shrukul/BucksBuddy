@@ -41,7 +41,7 @@ public class RegistrationIntentService extends IntentService {
     @Override
     public void onCreate() {
         super.onCreate();
-        preferences = getSharedPreferences("bucksbuddyPref",0);
+        preferences = getSharedPreferences("bucksbuddyPref", 0);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class RegistrationIntentService extends IntentService {
 
     private void sendRegistrationToServer(String token) {
         // Add custom implementation, as needed.
-        preferences.edit().putString("token",token).commit();
+        preferences.edit().putString("token", token).commit();
         UserSessionManager session = new UserSessionManager(getApplicationContext());
         ModelsGCMForm mgf = new ModelsGCMForm();
         mgf.setRegid(token);
@@ -107,12 +107,12 @@ class BucksBuddyTask extends AsyncTask<ModelsGCMForm, Void, ModelsBooleanMessage
         Boolean result = false;
         try {
             result = res.getData();
-        } catch (Exception E){
+        } catch (Exception E) {
             E.printStackTrace();
         }
         String output = "";
 
-        if(result == true){
+        if (result == true) {
         }
     }
 }

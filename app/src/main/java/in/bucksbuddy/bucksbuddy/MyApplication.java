@@ -14,7 +14,7 @@ public class MyApplication extends Application {
 
     public static GoogleSignInAccount myAccount;
 
-    public void setAccount(GoogleSignInResult result){
+    public void setAccount(GoogleSignInResult result) {
         this.myAccount = result.getSignInAccount();
     }
 
@@ -22,13 +22,13 @@ public class MyApplication extends Application {
         return this.myAccount;
     }
 
-        @Override
-        public void onCreate() {
-            super.onCreate();
-            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                    .setDefaultFontPath("fonts/OpenSans-Regular.ttf")
-                    .setFontAttrId(R.attr.fontPath)
-                    .build());
-        }
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/OpenSans-Regular.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build());
+    }
 }
 

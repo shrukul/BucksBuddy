@@ -18,7 +18,7 @@ import android.widget.EditText;
  */
 public class PinInfo extends AppCompatActivity {
 
-    EditText id,phone;
+    EditText id, phone;
     Button btn;
     int setup = -1;
     View parentLayout;
@@ -31,8 +31,8 @@ public class PinInfo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pin_info);
 
-        phone = (EditText)findViewById(R.id.p_phone);
-        btn = (Button)findViewById(R.id.btn_setup);
+        phone = (EditText) findViewById(R.id.p_phone);
+        btn = (Button) findViewById(R.id.btn_setup);
         parentLayout = findViewById(android.R.id.content);
 
         btn.setOnClickListener(new View.OnClickListener() {
@@ -40,7 +40,7 @@ public class PinInfo extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (!validate()) {
-                    Snackbar snackbar = Snackbar.make( parentLayout, "Enter Valid Details.", Snackbar.LENGTH_LONG);
+                    Snackbar snackbar = Snackbar.make(parentLayout, "Enter Valid Details.", Snackbar.LENGTH_LONG);
                     snackbar.show();
                     return;
                 }
@@ -58,8 +58,8 @@ public class PinInfo extends AppCompatActivity {
         sphone = phone.getText().toString();
 
         Intent returnIntent = new Intent();
-        returnIntent.putExtra("phone",sphone);
-        setResult(Activity.RESULT_OK,returnIntent);
+        returnIntent.putExtra("phone", sphone);
+        setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }
 

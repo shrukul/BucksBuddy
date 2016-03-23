@@ -23,22 +23,22 @@ import android.view.animation.LinearInterpolator;
 public class CircularProgressDrawable extends Drawable
         implements Animatable {
 
-    private static final Interpolator ANGLE_INTERPOLATOR      = new LinearInterpolator();
-    private static final Interpolator SWEEP_INTERPOLATOR      = new DecelerateInterpolator();
-    private static final int          ANGLE_ANIMATOR_DURATION = 2000;
-    private static final int          SWEEP_ANIMATOR_DURATION = 600;
-    private static final int          MIN_SWEEP_ANGLE         = 30;
-    private final RectF fBounds                 = new RectF();
+    private static final Interpolator ANGLE_INTERPOLATOR = new LinearInterpolator();
+    private static final Interpolator SWEEP_INTERPOLATOR = new DecelerateInterpolator();
+    private static final int ANGLE_ANIMATOR_DURATION = 2000;
+    private static final int SWEEP_ANIMATOR_DURATION = 600;
+    private static final int MIN_SWEEP_ANGLE = 30;
+    private final RectF fBounds = new RectF();
 
     private ObjectAnimator mObjectAnimatorSweep;
     private ObjectAnimator mObjectAnimatorAngle;
-    private boolean        mModeAppearing;
+    private boolean mModeAppearing;
     private Paint mPaint;
-    private float          mCurrentGlobalAngleOffset;
-    private float          mCurrentGlobalAngle;
-    private float          mCurrentSweepAngle;
-    private float          mBorderWidth;
-    private boolean        mRunning;
+    private float mCurrentGlobalAngleOffset;
+    private float mCurrentGlobalAngle;
+    private float mCurrentSweepAngle;
+    private float mBorderWidth;
+    private boolean mRunning;
 
     public CircularProgressDrawable(int color, float borderWidth) {
         mBorderWidth = borderWidth;

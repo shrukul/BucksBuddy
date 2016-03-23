@@ -16,6 +16,7 @@ public class TransferSuccess extends AppCompatActivity {
 
     private TextView msg;
     private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

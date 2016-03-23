@@ -26,18 +26,18 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder> 
 
         PersonViewHolder(View itemView) {
             super(itemView);
-            cv = (CardView)itemView.findViewById(R.id.cv);
-            personName = (TextView)itemView.findViewById(R.id.recent_item_name);
-            personAge = (TextView)itemView.findViewById(R.id.recent_item_number);
-            personPhoto = (ImageView)itemView.findViewById(R.id.recent_item_pic);
-            type = (ImageView)itemView.findViewById(R.id.type_trans);
-            amount = (TextView)itemView.findViewById(R.id.amt);
+            cv = (CardView) itemView.findViewById(R.id.cv);
+            personName = (TextView) itemView.findViewById(R.id.recent_item_name);
+            personAge = (TextView) itemView.findViewById(R.id.recent_item_number);
+            personPhoto = (ImageView) itemView.findViewById(R.id.recent_item_pic);
+            type = (ImageView) itemView.findViewById(R.id.type_trans);
+            amount = (TextView) itemView.findViewById(R.id.amt);
         }
     }
 
     List<Person> persons;
 
-    RVAdapter(List<Person> persons){
+    RVAdapter(List<Person> persons) {
         this.persons = persons;
     }
 
@@ -60,7 +60,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder> 
         personViewHolder.amount.setText("₹ " + persons.get(i).amount);
 //        personViewHolder.personPhoto.setImageResource(persons.get(i).photoId);
         personViewHolder.personPhoto.setImageResource(R.drawable.profile);
-        if(persons.get(i).type==0)
+        if (persons.get(i).type == 0)
             personViewHolder.type.setImageResource(R.drawable.ic_log_outgoing);
         else
             personViewHolder.type.setImageResource(R.drawable.ic_log_incoming);

@@ -3,6 +3,7 @@ package in.bucksbuddy.bucksbuddy;
 /**
  * Created by shrukul on 31/12/15.
  */
+
 import java.util.HashMap;
 
 import android.content.Context;
@@ -43,14 +44,14 @@ public class UserSessionManager {
     public static final String KEY_BAL = "bal";
 
     // Constructor
-    public UserSessionManager(Context context){
+    public UserSessionManager(Context context) {
         this._context = context;
         pref = _context.getSharedPreferences(PREFER_NAME, PRIVATE_MODE);
         editor = pref.edit();
     }
 
     //Create login session
-    public void createUserLoginSession(String name, String email, String phone, String uri){
+    public void createUserLoginSession(String name, String email, String phone, String uri) {
         // Storing login value as TRUE
         editor.putBoolean(IS_USER_LOGIN, true);
 
@@ -67,26 +68,26 @@ public class UserSessionManager {
         // commit changes
         editor.commit();
 
-        System.out.println(pref.getBoolean(IS_USER_LOGIN,false));
+        System.out.println(pref.getBoolean(IS_USER_LOGIN, false));
     }
 
-    public void setBalance(String balance){
-        editor.putString(KEY_BAL,balance);
+    public void setBalance(String balance) {
+        editor.putString(KEY_BAL, balance);
         editor.commit();
     }
 
-    public String getBalance(){
-        return pref.getString(KEY_BAL,"0");
+    public String getBalance() {
+        return pref.getString(KEY_BAL, "0");
     }
 
     /**
      * Check login method will check user login status
      * If false it will redirect user to login page
      * Else do anything
-     * */
-    public boolean checkLogin(){
+     */
+    public boolean checkLogin() {
         // Check login status
-        if(!this.isUserLoggedIn()){
+        if (!this.isUserLoggedIn()) {
 
             System.out.println("here A1");
 
@@ -109,11 +110,10 @@ public class UserSessionManager {
     }
 
 
-
     /**
      * Get stored session data
-     * */
-    public HashMap<String, String> getUserDetails(){
+     */
+    public HashMap<String, String> getUserDetails() {
 
         //Use hashmap to store user credentials
         HashMap<String, String> user = new HashMap<String, String>();
@@ -130,8 +130,8 @@ public class UserSessionManager {
 
     /**
      * Clear session details
-     * */
-    public void logoutUser(){
+     */
+    public void logoutUser() {
 
         // Clearing all user data from Shared Preferences
         editor.clear();
@@ -152,14 +152,14 @@ public class UserSessionManager {
 
 
     // Check for login
-    public boolean isUserLoggedIn(){
+    public boolean isUserLoggedIn() {
         System.out.println("here A3");
         System.out.println("Here - " + pref.getBoolean(IS_USER_LOGIN, false));
         return pref.getBoolean(IS_USER_LOGIN, false);
     }
 
     //Create login session
-    public ProfileData getProfileInfo (){
+    public ProfileData getProfileInfo() {
 
         ProfileData pd = new ProfileData();
 
@@ -176,8 +176,8 @@ public class UserSessionManager {
         return pd;
     }
 
-    public String check(){
-        return pref.getString(KEY_EMAIL,"");
+    public String check() {
+        return pref.getString(KEY_EMAIL, "");
     }
 }
 

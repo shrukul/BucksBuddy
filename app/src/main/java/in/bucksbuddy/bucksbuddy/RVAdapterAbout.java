@@ -25,17 +25,17 @@ public class RVAdapterAbout extends RecyclerView.Adapter<RVAdapterAbout.PersonVi
 
         PersonViewHolder(View itemView) {
             super(itemView);
-            cv = (CardView)itemView.findViewById(R.id.cv);
-            personName = (TextView)itemView.findViewById(R.id.recent_item_name);
-            personAge = (TextView)itemView.findViewById(R.id.recent_item_number);
-            personPhoto = (ImageView)itemView.findViewById(R.id.recent_item_pic);
-            amount = (TextView)itemView.findViewById(R.id.amt);
+            cv = (CardView) itemView.findViewById(R.id.cv);
+            personName = (TextView) itemView.findViewById(R.id.recent_item_name);
+            personAge = (TextView) itemView.findViewById(R.id.recent_item_number);
+            personPhoto = (ImageView) itemView.findViewById(R.id.recent_item_pic);
+            amount = (TextView) itemView.findViewById(R.id.amt);
         }
     }
 
     List<Person> persons;
 
-    RVAdapterAbout(List<Person> persons){
+    RVAdapterAbout(List<Person> persons) {
         this.persons = persons;
     }
 

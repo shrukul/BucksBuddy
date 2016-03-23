@@ -101,7 +101,7 @@ public class Credit extends Fragment {
         obj.execute(mcf);
     }
 
-    private class BucksBuddyTask extends AsyncTask<ModelsCreditForm, Void, ModelsTransactionForm>{
+    private class BucksBuddyTask extends AsyncTask<ModelsCreditForm, Void, ModelsTransactionForm> {
         Context context;
         final ProgressDialog progressDialog = new ProgressDialog(getActivity(),
                 R.style.AppTheme_Dark_Dialog);
@@ -127,7 +127,7 @@ public class Credit extends Fragment {
                 trans = service.credit(mcf[0]).execute();
             } catch (IOException e) {
                 e.printStackTrace();
-                Log.d("gae","Some error");
+                Log.d("gae", "Some error");
             }
             return trans;
         }
@@ -139,7 +139,7 @@ public class Credit extends Fragment {
             int result = trans.getSuccess().intValue();
             String output = "";
 
-            switch (result){
+            switch (result) {
                 case 0:
                     output = "The ID is incorrect.";
                     break;
@@ -151,7 +151,7 @@ public class Credit extends Fragment {
                     output = "Transaction Successful";
                     Snackbar snackbar = Snackbar.make(getView(), output, Snackbar.LENGTH_LONG);
                     snackbar.show();
-                    Intent it = new Intent(getActivity(),TransferSuccess.class);
+                    Intent it = new Intent(getActivity(), TransferSuccess.class);
                     it.putExtra("msg", "Successfully credited ₹ " + input_credit.getText() + " to your wallet");
                     startActivity(it);
                     input_credit.setText("");

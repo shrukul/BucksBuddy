@@ -3,6 +3,7 @@ package in.bucksbuddy.bucksbuddy;
 /**
  * Created by shrukul on 1/2/16.
  */
+
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.DialogPreference;
@@ -33,11 +34,9 @@ public class UserSettingsActivity extends AppCompatActivity {
 
     }
 
-    public static class MyPreferenceFragment extends PreferenceFragment
-    {
+    public static class MyPreferenceFragment extends PreferenceFragment {
         @Override
-        public void onCreate(final Bundle savedInstanceState)
-        {
+        public void onCreate(final Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.preferences);
         }

@@ -167,7 +167,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         @Override
         protected void onPostExecute(ModelsProfileForm profile) {
             progressDialog.dismiss();
-            if(profile!=null && profile.getSuccess().intValue() == 1) {
+            if (profile != null && profile.getSuccess().intValue() == 1) {
                 phone = profile.getPhoneNumber();
                 name = profile.getDisplayName();
                 uri = profile.getUri();
@@ -177,7 +177,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 System.out.println("got id = " + phone);
                 onLoginSuccess();
                 // Do something with the result.
-            }else{
+            } else {
                 onLoginFailed(profile.getSuccess().intValue());
             }
         }
@@ -225,7 +225,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
     }
 
-    private class GoogleSignInTask extends AsyncTask<ModelsGoogleLoginForm, Void, ModelsProfileForm>{
+    private class GoogleSignInTask extends AsyncTask<ModelsGoogleLoginForm, Void, ModelsProfileForm> {
         Context context;
         final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
                 R.style.AppTheme_Dark_Dialog);
@@ -251,7 +251,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 prof = service.googleLoginUser(mglf[0]).execute();
             } catch (IOException e) {
                 e.printStackTrace();
-                Log.d("gae","Some error");
+                Log.d("gae", "Some error");
             }
             return prof;
         }
@@ -261,7 +261,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             progressDialog.dismiss();
             // Do something with the result.
 
-            if(profile!=null && profile.getSuccess().intValue() == 1) {
+            if (profile != null && profile.getSuccess().intValue() == 1) {
                 phone = profile.getPhoneNumber();
                 name = profile.getDisplayName();
                 uri = profile.getUri();
@@ -308,11 +308,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     public void onLoginFailed(int resCode) {
         String text = "Something went Wrong. Try again...";
-        if(resCode == 0)
+        if (resCode == 0)
             text = "The User does not exist. Check the phone number again...";
         else if (resCode == 2)
             text = "Invalid Phone Number / Pin";
-        if(resCode != -1) {// Validation failed
+        if (resCode != -1) {// Validation failed
             Snackbar snackbar = Snackbar.make(parentLayout, text, Snackbar.LENGTH_LONG);
             snackbar.show();
         }

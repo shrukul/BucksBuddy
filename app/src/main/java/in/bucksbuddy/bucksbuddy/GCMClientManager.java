@@ -7,11 +7,14 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.AsyncTask;
 import android.util.Log;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
+
 import java.io.IOException;
+
 public class GCMClientManager {
     // Constants
     public static final String TAG = "GCMClientManager";
@@ -24,11 +27,13 @@ public class GCMClientManager {
     private String regid;
     private String projectNumber;
     private Activity activity;
+
     public GCMClientManager(Activity activity, String projectNumber) {
         this.activity = activity;
         this.projectNumber = projectNumber;
         this.gcm = GoogleCloudMessaging.getInstance(activity);
     }
+
     /**
      * @return Application's version code from the {@code PackageManager}.
      */
@@ -42,6 +47,7 @@ public class GCMClientManager {
             throw new RuntimeException("Could not get package name: " + e);
         }
     }
+
     // Register if needed or fetch from local store
     public void registerIfNeeded(final RegistrationCompletedHandler handler) {
         if (checkPlayServices()) {
@@ -56,9 +62,10 @@ public class GCMClientManager {
             Log.i(TAG, "No valid Google Play Services APK found.");
         }
     }
+
     /**
      * Registers the application with GCM servers asynchronously.
-     * <p>
+     * <p/>
      * Stores the registration ID and app versionCode in the application's
      * shared preferences.
      */
@@ -83,6 +90,7 @@ public class GCMClientManager {
                 }
                 return regid;
             }
+
             @Override
             protected void onPostExecute(String regId) {
                 if (regId != null) {
@@ -91,13 +99,14 @@ public class GCMClientManager {
             }
         }.execute(null, null, null);
     }
+
     /**
      * Gets the current registration ID for application on GCM service.
-     * <p>
+     * <p/>
      * If result is empty, the app needs to register.
      *
      * @return registration ID, or empty string if there is no existing
-     *     registration ID.
+     * registration ID.
      */
     private String getRegistrationId(Context context) {
         final SharedPreferences prefs = getGCMPreferences(context);
@@ -117,12 +126,13 @@ public class GCMClientManager {
         }
         return registrationId;
     }
+
     /**
      * Stores the registration ID and app versionCode in the application's
      * {@code SharedPreferences}.
      *
      * @param context application's context.
-     * @param regId registration ID
+     * @param regId   registration ID
      */
     private void storeRegistrationId(Context context, String regId) {
         final SharedPreferences prefs = getGCMPreferences(context);
@@ -133,12 +143,14 @@ public class GCMClientManager {
         editor.putInt(PROPERTY_APP_VERSION, appVersion);
         editor.commit();
     }
+
     private SharedPreferences getGCMPreferences(Context context) {
         // This sample app persists the registration ID in shared preferences, but
         // how you store the regID in your app is up to you.
         return getContext().getSharedPreferences(context.getPackageName(),
                 Context.MODE_PRIVATE);
     }
+
     /**
      * Check the device to make sure it has the Google Play Services APK. If
      * it doesn't, display a dialog that allows users to download the APK from
@@ -157,14 +169,18 @@ public class GCMClientManager {
         }
         return true;
     }
+
     private Context getContext() {
         return activity;
     }
+
     private Activity getActivity() {
         return activity;
     }
+
     public static abstract class RegistrationCompletedHandler {
         public abstract void onSuccess(String registrationId, boolean isNewRegistration);
+
         public void onFailure(String ex) {
             // If there is an error, don't just keep trying to register.
             // Require the user to click a button again, or perform
