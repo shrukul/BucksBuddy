@@ -42,6 +42,44 @@
             android:textSize="16dip"
             android:textStyle="normal" />
 
+        <EditText
+            android:id="@+id/pin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30.0dip"
+            android:background="#33000000"
+            android:drawableLeft="@drawable/phone_new"
+            android:drawablePadding="10dip"
+            android:hint="Pin"
+            android:inputType="numberPassword"
+            android:maxLength="4"
+            android:padding="10dip"
+            android:textColor="#e6ffffff"
+            android:textColorHint="#4cffffff"
+            android:textSize="16dip"
+            android:textStyle="normal" />
+
+        <EditText
+            android:id="@+id/confirm_pin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30.0dip"
+            android:background="#33000000"
+            android:drawableLeft="@drawable/phone_new"
+            android:drawablePadding="10dip"
+            android:hint="Confirm Pin"
+            android:inputType="numberPassword"
+            android:maxLength="4"
+            android:padding="10dip"
+            android:textColor="#e6ffffff"
+            android:textColorHint="#4cffffff"
+            android:textSize="16dip"
+            android:textStyle="normal" />
+
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_setup"
             android:layout_width="fill_parent"

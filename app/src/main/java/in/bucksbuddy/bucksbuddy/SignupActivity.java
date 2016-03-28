@@ -62,7 +62,7 @@ public class SignupActivity extends AppCompatActivity implements GoogleApiClient
     private static final String TAG = "SignupActivity";
     private final String serverUrl = "http://bucksbuddy.pe.hu/index.php";
     String PROJECT_NUMBER = "744421378343";
-    private String sname, semail, suri, sphone;
+    private String sname, semail, suri, sphone, spin;
 
     UserSessionManager session;
     View parentLayout;
@@ -143,7 +143,7 @@ public class SignupActivity extends AppCompatActivity implements GoogleApiClient
         });
     }
 
-    public void signup(String name, String email, String phone, String uri) {
+    public void signup(String name, String email, String phone, String uri, String pin) {
         Log.d(TAG, "Signup");
 
 //        RegGCM();
@@ -164,7 +164,7 @@ public class SignupActivity extends AppCompatActivity implements GoogleApiClient
         muf.setMainEmail(email);
         muf.setPhoneNumber(phone);
         muf.setUri(uri);
-        muf.setPin((long) 1111);
+        muf.setPin(Long.valueOf(pin));
 
         BucksBuddyTask obj = new BucksBuddyTask();
         obj.execute(muf);
@@ -430,7 +430,8 @@ public class SignupActivity extends AppCompatActivity implements GoogleApiClient
         } else if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
             SharedPreferences preferences = getSharedPreferences("bucksbuddyPref", 0);
             sphone = data.getStringExtra("phone");
-            signup(sname, semail, sphone, suri);
+            spin = data.getStringExtra("pin");
+            signup(sname, semail, sphone, suri, spin);
         }
     }
 

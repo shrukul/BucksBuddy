@@ -18,7 +18,7 @@ import android.widget.EditText;
  */
 public class PinInfo extends AppCompatActivity {
 
-    EditText id, phone;
+    EditText pin, phone, confirmpin;
     Button btn;
     int setup = -1;
     View parentLayout;
@@ -32,6 +32,8 @@ public class PinInfo extends AppCompatActivity {
         setContentView(R.layout.pin_info);
 
         phone = (EditText) findViewById(R.id.p_phone);
+        pin = (EditText) findViewById(R.id.pin);
+        confirmpin = (EditText) findViewById(R.id.confirm_pin);
         btn = (Button) findViewById(R.id.btn_setup);
         parentLayout = findViewById(android.R.id.content);
 
@@ -53,12 +55,14 @@ public class PinInfo extends AppCompatActivity {
     }
 
     private void setup() {
-        String sphone;
+        String sphone,spin;
 
         sphone = phone.getText().toString();
+        spin = pin.getText().toString();
 
         Intent returnIntent = new Intent();
         returnIntent.putExtra("phone", sphone);
+        returnIntent.putExtra("pin", spin);
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }
@@ -71,7 +75,14 @@ public class PinInfo extends AppCompatActivity {
         if (phoneText.length() != 10) {
             phone.setError("Enter a valid Phone Number");
             valid = false;
-        } else {
+        } else if(pin.getText().length() != 4){
+            pin.setError("Length of pin code should be 4");
+            valid = false;
+        } else if(!confirmpin.getText().toString().equals(pin.getText().toString())){
+            confirmpin.setError("Pins do not match");
+            valid = false;
+        }
+        else {
             phone.setError(null);
         }
         return valid;
