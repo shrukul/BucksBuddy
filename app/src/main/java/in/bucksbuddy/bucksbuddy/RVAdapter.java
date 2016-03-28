@@ -27,7 +27,11 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder> 
         PersonViewHolder(View itemView) {
             super(itemView);
             cv = (CardView) itemView.findViewById(R.id.cv);
-            personName = (TextView) itemView.findViewById(R.id.recent_item_name);
+            try {
+                personName = (TextView) itemView.findViewById(R.id.recent_item_name);
+            } catch(Exception E){
+                E.printStackTrace();
+            }
             personAge = (TextView) itemView.findViewById(R.id.recent_item_number);
             personPhoto = (ImageView) itemView.findViewById(R.id.recent_item_pic);
             type = (ImageView) itemView.findViewById(R.id.type_trans);
